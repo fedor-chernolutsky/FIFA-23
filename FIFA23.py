@@ -1,21 +1,38 @@
 # -*- coding: utf-8 -*-
+import time
 import pygame
+
+# Start PyGame
 pygame.init()
 
-screen = pygame.display.set_mode()
+# Some resolution stuff
+info = pygame.display.Info()
+SIZE = info.current_w, info.current_h
+main = pygame.display.set_mode(SIZE)
+screen = pygame.Surface((1920, 1080))
+
 clock = pygame.time.Clock()
 FPS = 60
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-choplin = pygame.font.Font("Choplin-Medium.ttf", 12)
+choplin = pygame.font.Font("Choplin-Medium.ttf", 24)
+choplin_mini = pygame.font.Font("Choplin-Medium.ttf", 12)
 
 logo = pygame.image.load("FIFA23.png")
-alpha = 0
-you_can_go_to_the_next_scene = False
-going_to_the_next_scene = False
-
+splash = pygame.image.load("splash.png")
+text = choplin.render('Press any button', True, BLACK)
+text_mini = choplin_mini.render('This will be your default control device', True, BLACK)
+screen_color = 0
+alpha_logo = 0
+alpha_splash = 0
+alpha_text = 0
+alpha_mini_text = 0
+first = True
+second = False
+sunrise = True
+you_can_go_to_the_next_screen = False
 
 while True:
     clock.tick(FPS)
@@ -24,18 +41,31 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             quit()
-        
-        if event.type == pygame.KEYDOWN and you_can_go_to_the_next_scene:
-            going_to_the_next_scene = True
+        if event.type == pygame.KEYDOWN:
+            print(pygame.mouse.get_pos())
     
     # Logic
-    screen.fill(WHITE)
-    alpha += 0.4 if alpha < 20 else 1
-    logo.set_alpha(alpha)
-    if alpha > 255: you_can_go_to_the_next_scene = True
-    screen.blit(logo, (450, 350))
-    if you_can_go_to_the_next_scene and alpha % (FPS * 4) < FPS * 2:
-        screen.blit(choplin.render("Press any key", True, BLACK), (450, 500))
+    if first and sunrise:
+        if screen_color < 253: screen_color += 2; alpha_logo += 2
+        else: sunrise = False; time.sleep(2)
+    elif first and not sunrise:
+        if screen_color > 0: screen_color -= 2; alpha_logo -= 2
+        else: first = False; second = True; sunrise = True
+
+    if second: alpha_splash += 2
+    you_can_go_to_the_next_screen = alpha_splash > 255
+    alpha_text = alpha_splash % 500 if alpha_splash > 255 else 0
+
+    screen.fill((screen_color, screen_color, screen_color))
+    logo.set_alpha(alpha_logo)
+    splash.set_alpha(alpha_splash)
+    text.set_alpha(alpha_text)
+    text_mini.set_alpha(alpha_text)
+    screen.blit(logo, (550, 450))
+    screen.blit(splash, (0, 0))
+    screen.blit(text, (820, 800))
+    screen.blit(text_mini, (820, 830))
+    main.blit(pygame.transform.scale(screen, SIZE), (0, 0))
     pygame.display.update()
 
 

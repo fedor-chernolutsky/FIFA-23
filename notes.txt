@@ -1,0 +1,4 @@
+###  1 ###
+img.convert()  # The method convert() optimizes the image format and makes drawing faster:
+
+### 2 ###
