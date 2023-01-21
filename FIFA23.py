@@ -1,24 +1,23 @@
 # -*- coding: utf-8 -*-
 import time
+import ctypes
 import pygame
+
+# Screen resolution fix
+ctypes.windll.user32.SetProcessDPIAware()
 
 # Start PyGame
 pygame.init()
 
-# Some resolution stuff
-info = pygame.display.Info()
-SIZE = info.current_w, info.current_h
-main = pygame.display.set_mode(SIZE)
-screen = pygame.Surface((1920, 1080))
-
+screen = pygame.display.set_mode((1920, 1080))
 clock = pygame.time.Clock()
 FPS = 60
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-choplin = pygame.font.Font("Choplin-Medium.ttf", 24)
-choplin_mini = pygame.font.Font("Choplin-Medium.ttf", 12)
+choplin = pygame.font.Font("Choplin-Medium.ttf", 32)
+choplin_mini = pygame.font.Font("Choplin-Medium.ttf", 18)
 
 logo = pygame.image.load("FIFA23.png")
 splash = pygame.image.load("splash.png")
@@ -63,9 +62,8 @@ while True:
     text_mini.set_alpha(alpha_text)
     screen.blit(logo, (550, 450))
     screen.blit(splash, (0, 0))
-    screen.blit(text, (820, 800))
-    screen.blit(text_mini, (820, 830))
-    main.blit(pygame.transform.scale(screen, SIZE), (0, 0))
+    screen.blit(text, (820, 780))
+    screen.blit(text_mini, (780, 820))
     pygame.display.update()
 
 
