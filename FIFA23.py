@@ -3,7 +3,7 @@ import time
 import ctypes
 import pygame
 
-# Screen resolution fix
+# Resolution fix
 ctypes.windll.user32.SetProcessDPIAware()
 
 # Start PyGame
@@ -23,6 +23,7 @@ logo = pygame.image.load("FIFA23.png")
 splash = pygame.image.load("splash.png")
 text = choplin.render('Press any button', True, BLACK)
 text_mini = choplin_mini.render('This will be your default control device', True, BLACK)
+
 screen_color = 0
 alpha_logo = 0
 alpha_splash = 0
@@ -32,6 +33,7 @@ first = True
 second = False
 sunrise = True
 you_can_go_to_the_next_screen = False
+going_to_the_next_screen = False
 
 while True:
     clock.tick(FPS)
@@ -40,8 +42,10 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             quit()
-        if event.type == pygame.KEYDOWN:
-            print(pygame.mouse.get_pos())
+
+        if you_can_go_to_the_next_screen and event.type == pygame.KEYDOWN:
+            going_to_the_next_screen = True
+            second = False; alpha_splash = 255
     
     # Logic
     if first and sunrise:
@@ -54,6 +58,11 @@ while True:
     if second: alpha_splash += 2
     you_can_go_to_the_next_screen = alpha_splash > 255
     alpha_text = alpha_splash % 500 if alpha_splash > 255 else 0
+    
+    if going_to_the_next_screen: alpha_splash -= 2
+    
+    if alpha_splash < 0: print("Open menu"); quit()
+
 
     screen.fill((screen_color, screen_color, screen_color))
     logo.set_alpha(alpha_logo)
