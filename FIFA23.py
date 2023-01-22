@@ -1,28 +1,33 @@
 # -*- coding: utf-8 -*-
-# Resolution fix
 import ctypes
-ctypes.windll.user32.SetProcessDPIAware()
-# Start PyGame
 import pygame
-pygame.init()
 
 from variables import FULL_HD
 from splash_page import SplashPage
 from menu_page import MenuPage
 
-screen = pygame.display.set_mode(FULL_HD)
-clock = pygame.time.Clock()
+class FIFA23:
+    def __init__(self):
+        self.screen = pygame.display.set_mode(FULL_HD)
+        self.clock = pygame.time.Clock()
+        
+        self.splash_page = SplashPage(self.clock, self.screen)
+        self.menu_page = MenuPage(self.clock, self.screen)
 
-splash_page = SplashPage(clock, screen)
-menu_page = MenuPage(clock, screen)
+        self.pages = {"splash_page": self.splash_page, "menu_page": self.menu_page}
+        self.page = self.splash_page
+    
+    def change_page(self, page):
+        self.page = page
 
-pages = {"splash_page": splash_page, "menu_page": menu_page}
+    def launch(self):
+        while True:
+            self.change_page(self.page.run(self.pages))
 
-page = splash_page
-
-while True:
-    page = page.run(pages)
-
-
-
-
+if __name__ == "__main__":
+    # Resolution fix
+    ctypes.windll.user32.SetProcessDPIAware()
+    # Start PyGame
+    pygame.init()
+    # Launch FIFA23
+    FIFA23().launch()
