@@ -15,7 +15,7 @@ class FIFA23:
         self.menu_page = MenuPage(self.clock, self.screen)
 
         self.pages = {"splash_page": self.splash_page, "menu_page": self.menu_page}
-        self.page = self.splash_page
+        self.page = self.menu_page
     
     def change_page(self, page):
         self.page = page
