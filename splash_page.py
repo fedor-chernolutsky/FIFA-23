@@ -5,8 +5,8 @@ from variables import BLACK, WHITE, FPS
 
 class SplashPage:
     
-    def __init__(self, clock, screen):
-        self.clock = clock
+    def __init__(self, screen):
+        self.clock = pygame.time.Clock()
         self.screen = screen
         self.choplin = pygame.font.Font("Choplin-Medium.ttf", 32)
         self.choplin_mini = pygame.font.Font("Choplin-Medium.ttf", 18)

@@ -4,8 +4,8 @@ from variables import BLACK, WHITE, FPS
 
 class MenuPage:
     
-    def __init__(self, clock, screen):
-        self.clock = clock
+    def __init__(self, screen):
+        self.clock = pygame.time.Clock()
         self.screen = screen
         self.grass_color = (173, 206, 129)
         
