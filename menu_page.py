@@ -13,7 +13,7 @@ class MenuPage:
         white = pygame.Surface((256, 60)); white.fill(WHITE)
         self.logo.blit(white, (0, 0), special_flags=pygame.BLENDMODE_BLEND)
     
-    def run(self, pages):
+    def run(self):
 
         while True:
             self.clock.tick(FPS)

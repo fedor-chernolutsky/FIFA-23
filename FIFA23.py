@@ -16,12 +16,12 @@ class FIFA23:
         self.pages = {"splash_page": self.splash_page, "menu_page": self.menu_page}
         self.page = self.menu_page
     
-    def change_page(self, page):
-        self.page = page
+    def change_page(self, name):
+        self.page = self.pages[name]
 
     def launch(self):
         while True:
-            self.change_page(self.page.run(self.pages))
+            self.change_page(self.page.run())
 
 if __name__ == "__main__":
     # Resolution fix

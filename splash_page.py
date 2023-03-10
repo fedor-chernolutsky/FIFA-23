@@ -27,7 +27,7 @@ class SplashPage:
         self.you_can_go_to_the_next_screen = False
         self.going_to_the_next_screen = False
     
-    def run(self, pages):
+    def run(self):
         while True:
             self.clock.tick(FPS)
             # Events
@@ -53,7 +53,7 @@ class SplashPage:
             
             if self.going_to_the_next_screen: self.alpha_splash -= 2
             
-            if self.alpha_splash < 0: return pages.get("menu_page")
+            if self.alpha_splash < 0: return "menu_page"
 
 
             self.screen.fill((self.screen_color, self.screen_color, self.screen_color))
